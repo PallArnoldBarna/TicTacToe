@@ -85,15 +85,15 @@ struct ContentView: View {
                         .padding(.bottom, 20)
                         .font(.headline)
                     Picker(selection: $selection, label: Text("Select board size")) {
-                        ForEach(0..<sizeOptions.count) { index in
+                        ForEach(sizeOptions.indices, id: \.self) { index in
                             Text(String(self.sizeOptions[index])).tag(index)
                         }
                     }
-                    .onChange(of: selection, perform: { value in
+                    .onChange(of: selection) { oldValue, newValue in
                         gameFinished = false
-                        boardSize = sizeOptions[value]
+                        boardSize = sizeOptions[newValue]
                         gameState.resetBoard(size: boardSize)
-                    })
+                    }
                 }
                 .pickerStyle(.palette)
                 .presentationDetents([.height(180)])
