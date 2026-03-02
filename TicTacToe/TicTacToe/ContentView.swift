@@ -15,6 +15,7 @@ struct ContentView: View {
     @State var gameFinished = false
     let borderSize = CGFloat(5)
     let sizeOptions = [3, 4, 5, 6]
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         Text(gameState.turnText())
@@ -43,7 +44,7 @@ struct ContentView: View {
                             .bold()
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .aspectRatio(1, contentMode: .fit)
-                            .background(Color.white)
+                            .background(colorScheme == .light ? Color.white : Color.black)
                             .onTapGesture {
                                 if !gameFinished {
                                     gameState.placeTile(row, column)
@@ -53,7 +54,7 @@ struct ContentView: View {
                 }
             }
         }
-        .background(Color.black)
+        .background(colorScheme == .light ? Color.black : Color.white)
         .padding()
         .alert(isPresented: $gameState.showAlert) {
             Alert(
